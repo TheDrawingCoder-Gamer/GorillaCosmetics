@@ -87,29 +87,20 @@ namespace GorillaCosmetics
             selectedInfectedMaterial = SelectedMaterialFromConfig(GorillaCosmetics.selectedInfectedMaterial.Value);
             selectedHat = SelectedHatFromConfig(GorillaCosmetics.selectedHat.Value);
 
-            // Disable old mirror and use it as a base
+
             
-            GameObject gameMirror = null;
-            do {
-                // TODO: Hard code position instead of depending on a different object
-                // this is why it got borked before
-                gameMirror = GameObject.Find("Level/Forest/lower level/mirror (1)");
-                await Task.Delay(250);
-            } while (gameMirror == null);
-            Debug.Log("Found mirror!");
-            gameMirror.SetActive(false);
             
             // Load Mirror
             GameObject Mirror = UnityEngine.Object.Instantiate(PackageUtils.AssetBundleFromPackage($"{folder}\\Misc\\Mirror").LoadAsset<GameObject>("_Hat"));
             Mirror.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
-            Mirror.transform.position = gameMirror.transform.position + new Vector3(0, 0.55f, 0);
-            Mirror.transform.rotation = Quaternion.Euler(0.21f, 0, -4.6f);
+            Mirror.transform.position = new Vector3(-63f, 12.45f, -82f);
+            Mirror.transform.rotation = Quaternion.Euler(0.21f, -45, -4.6f);
             UnityEngine.Object.DontDestroyOnLoad(Mirror);
 
             // Load Hat Rack
             GameObject HatRack = UnityEngine.Object.Instantiate(PackageUtils.AssetBundleFromPackage($"{folder}\\Misc\\HatRack").LoadAsset<GameObject>("_Hat"));
             HatRack.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
-            HatRack.transform.position = Mirror.transform.position + new Vector3(-0.45f, -0.42f, -0.7f);
+            HatRack.transform.position = Mirror.transform.position + new Vector3(-1f, -0.5f, 0.2f);
             HatRack.transform.rotation = Quaternion.Euler(0, -70.0f, 0);
             UnityEngine.Object.DontDestroyOnLoad(HatRack);
             // how many hats

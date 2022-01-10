@@ -40,6 +40,14 @@ namespace GorillaCosmetics.Data
                     Debug.Log(err);
                     throw new Exception($"Loading hat at {path} failed.");
                 }
+            } else
+            {
+                Descriptor = new HatDescriptor();
+                Descriptor.AuthorName = "no one";
+                Descriptor.HatName = "None";
+                Descriptor.Description = string.Empty;
+                Descriptor.CustomColors = false;
+                Descriptor.DisablePublicLobbies = false;
             }
         }
     }

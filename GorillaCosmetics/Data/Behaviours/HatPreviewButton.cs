@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Photon.Pun;
 using System.Reflection;
 using System.Collections;
-
+using System;
 namespace GorillaCosmetics.Data.Behaviours
 {
 	public class HatPreviewButton : GorillaTriggerBox
@@ -15,34 +15,44 @@ namespace GorillaCosmetics.Data.Behaviours
 
 		private void OnTriggerEnter(Collider collider)
 		{
-			if (!canPress) return;
+			try
+            {
+				if (!canPress) return;
 
-			if (collider.GetComponentInParent<GorillaTriggerColliderHandIndicator>() != null)
-			{
-				GorillaTriggerColliderHandIndicator component = collider.GetComponent<GorillaTriggerColliderHandIndicator>();
-				// do stuff
-				if (hat != null)
+				if (collider.GetComponentInParent<GorillaTriggerColliderHandIndicator>() != null)
 				{
-					canPress = false;
-					string hatName = hat.Descriptor.HatName != null && hat.Descriptor.HatName != "None" ? hat.Descriptor.HatName : "None";
-					Debug.Log("Swapping to: " + hatName);
-					AssetLoader.SelectHat(hatName);
-					GorillaCosmetics.selectedHat.Value = hatName;
-					StartCoroutine(ButtonDelay());
-					try
+					GorillaTriggerColliderHandIndicator component = collider.GetComponent<GorillaTriggerColliderHandIndicator>();
+					// do stuff
+					if (hat != null)
 					{
-						UpdateHatValue();
+						canPress = false;
+							
+						string hatName = hat.Descriptor.HatName != null && hat.Descriptor.HatName != "None" ? hat.Descriptor.HatName : "None";
+						Debug.Log("Swapping to: " + hatName);
+						AssetLoader.SelectHat(hatName);
+						GorillaCosmetics.selectedHat.Value = hatName;
+						StartCoroutine(ButtonDelay());
+						try
+						{
+							UpdateHatValue();
+						}
+						catch
+						{
+							Debug.Log("Error selecting hat.");
+						}
 					}
-					catch
-                    {
-						Debug.Log("Error selecting hat.");
-                    }
+					if (component != null)
+					{
+						GorillaTagger.Instance.StartVibration(component.isLeftHand, GorillaTagger.Instance.tapHapticStrength / 2f, GorillaTagger.Instance.tapHapticDuration);
+					}
 				}
-				if (component != null)
-				{
-					GorillaTagger.Instance.StartVibration(component.isLeftHand, GorillaTagger.Instance.tapHapticStrength / 2f, GorillaTagger.Instance.tapHapticDuration);
-				}
-			}
+			} catch (Exception e)
+            {
+				Debug.LogError(e);
+				Debug.Log("Recovering by setting canPress to true");
+				canPress = true;
+            }
+			
 		}
 
 		void UpdateHatValue()
