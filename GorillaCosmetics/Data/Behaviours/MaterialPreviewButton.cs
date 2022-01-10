@@ -5,6 +5,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Photon.Pun;
 using System.Collections;
+using System;
 
 namespace GorillaCosmetics.Data.Behaviours
 {
@@ -33,9 +34,10 @@ namespace GorillaCosmetics.Data.Behaviours
 					{
 						UpdateMaterialValue();
 					}
-					catch
+					catch (Exception e)
 					{
 						Debug.Log("Error selecting mat.");
+						Debug.Log(e);
 					}
 				}
 				if (component != null)
@@ -50,13 +52,16 @@ namespace GorillaCosmetics.Data.Behaviours
 			string material = this.material.Descriptor.MaterialName;
 
 			GorillaTagger gorillaTagger = GorillaTagger.Instance;
+			Debug.Log("torment");
 			VRRig offlineVRRig = gorillaTagger.offlineVRRig;
+			Debug.Log("suffering");
 			if (offlineVRRig == null) offlineVRRig = gorillaTagger.myVRRig; // this will probably break stuff. TOO BAD!
+			Debug.Log("madness");
 
-			string hatCS = typeof(VRRig).GetField("hat", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(offlineVRRig) as string;
-			string face = typeof(VRRig).GetField("face", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(offlineVRRig) as string;
-			string badge = typeof(VRRig).GetField("badge", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(offlineVRRig) as string;
-
+			string hatCS = offlineVRRig.hat;
+			string face = offlineVRRig.face;
+			string badge = offlineVRRig.badge;
+			Debug.Log("trace debugging lol");
 			VRRigHatJSON hatJSON = new VRRigHatJSON();
 			hatJSON.hat = hatCS;
 			// I don't know if this is right, but I'm not sure how red is doing it so i'm taking my best guess.

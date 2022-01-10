@@ -69,6 +69,7 @@ namespace GorillaCosmetics
         public async static void Load()
         {
             if (Loaded) return;
+            Debug.Log("Loading Cosmetics");
             string folder = Path.GetDirectoryName(typeof(GorillaCosmetics).Assembly.Location);
 
             // Load Materials
@@ -87,14 +88,15 @@ namespace GorillaCosmetics
             selectedHat = SelectedHatFromConfig(GorillaCosmetics.selectedHat.Value);
 
             // Disable old mirror and use it as a base
+            
             GameObject gameMirror = null;
             do {
-                gameMirror = GameObject.Find("Level/treeroom/upper level/mirror");
+                gameMirror = GameObject.Find("Level/Forest/lower level/mirror (1)");
                 await Task.Delay(250);
             } while (gameMirror == null);
-
+            Debug.Log("Found mirror!");
             gameMirror.SetActive(false);
-
+            
             // Load Mirror
             GameObject Mirror = UnityEngine.Object.Instantiate(PackageUtils.AssetBundleFromPackage($"{folder}\\Misc\\Mirror").LoadAsset<GameObject>("_Hat"));
             Mirror.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
