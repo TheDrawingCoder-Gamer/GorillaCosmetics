@@ -52,16 +52,12 @@ namespace GorillaCosmetics.Data.Behaviours
 			string material = this.material.Descriptor.MaterialName;
 
 			GorillaTagger gorillaTagger = GorillaTagger.Instance;
-			Debug.Log("torment");
 			VRRig offlineVRRig = gorillaTagger.offlineVRRig;
-			Debug.Log("suffering");
 			if (offlineVRRig == null) offlineVRRig = gorillaTagger.myVRRig; // this will probably break stuff. TOO BAD!
-			Debug.Log("madness");
 
 			string hatCS = offlineVRRig.hat;
 			string face = offlineVRRig.face;
 			string badge = offlineVRRig.badge;
-			Debug.Log("trace debugging lol");
 			VRRigHatJSON hatJSON = new VRRigHatJSON();
 			hatJSON.hat = hatCS;
 			// I don't know if this is right, but I'm not sure how red is doing it so i'm taking my best guess.

@@ -14,6 +14,7 @@ namespace GorillaCosmetics.Data.Selectors
 
         void Awake()
         {
+            // cursed :angry:
             if (gameObject.name == "Left") next = false;
             else next = true;
         }

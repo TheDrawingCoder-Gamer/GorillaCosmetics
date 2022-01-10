@@ -91,6 +91,8 @@ namespace GorillaCosmetics
             
             GameObject gameMirror = null;
             do {
+                // TODO: Hard code position instead of depending on a different object
+                // this is why it got borked before
                 gameMirror = GameObject.Find("Level/Forest/lower level/mirror (1)");
                 await Task.Delay(250);
             } while (gameMirror == null);
