@@ -103,7 +103,7 @@ namespace GorillaCosmetics
             GameObject Mirror = UnityEngine.Object.Instantiate(PackageUtils.AssetBundleFromPackage($"{folder}\\Misc\\Mirror").LoadAsset<GameObject>("_Hat"));
             Mirror.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
             Mirror.transform.position = gameMirror.transform.position + new Vector3(0, 0.55f, 0);
-            Mirror.transform.rotation = Quaternion.Euler(0.21f, -153.2f, -4.6f);
+            Mirror.transform.rotation = Quaternion.Euler(0.21f, 0, -4.6f);
             UnityEngine.Object.DontDestroyOnLoad(Mirror);
 
             // Load Hat Rack

@@ -36,8 +36,8 @@ namespace GorillaCosmetics.Data.Behaviours
 					}
 					catch (Exception e)
 					{
-						Debug.Log("Error selecting mat.");
-						Debug.Log(e);
+						Debug.LogWarning("Error selecting mat.");
+						Debug.LogWarning(e);
 					}
 				}
 				if (component != null)
