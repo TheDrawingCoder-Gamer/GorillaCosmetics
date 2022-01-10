@@ -15,43 +15,36 @@ namespace GorillaCosmetics.Data.Behaviours
 
 		private void OnTriggerEnter(Collider collider)
 		{
-			try
-            {
-				if (!canPress) return;
+			if (!canPress) return;
 
-				if (collider.GetComponentInParent<GorillaTriggerColliderHandIndicator>() != null)
+			if (collider.GetComponentInParent<GorillaTriggerColliderHandIndicator>() != null)
+			{
+				GorillaTriggerColliderHandIndicator component = collider.GetComponent<GorillaTriggerColliderHandIndicator>();
+				// do stuff
+				if (hat != null)
 				{
-					GorillaTriggerColliderHandIndicator component = collider.GetComponent<GorillaTriggerColliderHandIndicator>();
-					// do stuff
-					if (hat != null)
-					{
-						canPress = false;
+					canPress = false;
 							
-						string hatName = hat.Descriptor.HatName != null && hat.Descriptor.HatName != "None" ? hat.Descriptor.HatName : "None";
-						Debug.Log("Swapping to: " + hatName);
-						AssetLoader.SelectHat(hatName);
-						GorillaCosmetics.selectedHat.Value = hatName;
-						StartCoroutine(ButtonDelay());
-						try
-						{
-							UpdateHatValue();
-						}
-						catch
-						{
-							Debug.Log("Error selecting hat.");
-						}
-					}
-					if (component != null)
+					string hatName = hat.Descriptor?.HatName ?? "None";
+					Debug.Log("Swapping to: " + hatName);
+					AssetLoader.SelectHat(hatName);
+					GorillaCosmetics.selectedHat.Value = hatName;
+					StartCoroutine(ButtonDelay());
+					try
 					{
-						GorillaTagger.Instance.StartVibration(component.isLeftHand, GorillaTagger.Instance.tapHapticStrength / 2f, GorillaTagger.Instance.tapHapticDuration);
+						UpdateHatValue();
+					}
+					catch
+					{
+						Debug.Log("Error selecting hat.");
 					}
 				}
-			} catch (Exception e)
-            {
-				Debug.LogError(e);
-				Debug.Log("Recovering by setting canPress to true");
-				canPress = true;
-            }
+				if (component != null)
+				{
+					GorillaTagger.Instance.StartVibration(component.isLeftHand, GorillaTagger.Instance.tapHapticStrength / 2f, GorillaTagger.Instance.tapHapticDuration);
+				}
+			}
+			
 			
 		}
 
@@ -70,7 +63,7 @@ namespace GorillaCosmetics.Data.Behaviours
 
 			VRRigHatJSON hatJSON = new VRRigHatJSON();
 			hatJSON.hat = hatString;
-			hatJSON.material = AssetLoader.SelectedMaterial().Descriptor.MaterialName != null ? AssetLoader.SelectedMaterial().Descriptor.MaterialName : "Default";
+			hatJSON.material = AssetLoader.SelectedMaterial().Descriptor.MaterialName ?? "Default";
 			string hatMessage = JsonConvert.SerializeObject(hatJSON);
 
 			if (offlineVRRig)
