@@ -66,7 +66,7 @@ namespace GorillaCosmetics
             return GorillaHatObjects[index];
         }
 
-        public async static void Load()
+        public static void Load()
         {
             if (Loaded) return;
             Debug.Log("Loading Cosmetics");
