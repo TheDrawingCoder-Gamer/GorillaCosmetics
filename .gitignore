@@ -363,6 +363,3 @@ FodyWeavers.xsd
 
 # Libs folder for BepinEx
 [Ll]ibs/
-
-# VSCode files (for people who can't use Visual Studio due to being superior)
-.vscode
