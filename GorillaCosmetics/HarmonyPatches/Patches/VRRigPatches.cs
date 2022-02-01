@@ -68,7 +68,7 @@ namespace GorillaCosmetics.HarmonyPatches
         {
             string hat = "";
             string material = "default";
-            
+
             if (newHat.Contains("}") && newHat.Contains("{"))
             {
                 // it's probably json. I really should implement a better check for this.
@@ -77,8 +77,12 @@ namespace GorillaCosmetics.HarmonyPatches
                 material = json.material;
 
                 PhotonView photonView = __instance.photonView;
-                Player owner = photonView?.Owner;
-                string UserID = owner?.UserId ?? "";
+                Player owner = photonView ? photonView.Owner : null;
+                string UserID = "";
+                if (owner != null && owner.UserId != null && owner.UserId != "")
+                {
+                    UserID = owner.UserId;
+                }
                 PlayerCosmeticsList.SetPlayer(UserID, hat, material);
             }
             else hat = newHat;
